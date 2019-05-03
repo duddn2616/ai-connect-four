@@ -1,2 +1,5 @@
-﻿  connect_four.cpp
+﻿  Main.cpp
+c:\users\soon\documents\github\ai-connect-four\project1\main.cpp(11): warning C4101: 'e': unreferenced local variable
+c:\users\soon\documents\github\ai-connect-four\project1\main.cpp(14): warning C4101: 'e': unreferenced local variable
+c:\users\soon\documents\github\ai-connect-four\project1\main.cpp(17): warning C4101: 'e': unreferenced local variable
   Project1.vcxproj -> C:\Users\soon\Documents\GitHub\ai-connect-four\Debug\ConnectFour.exe

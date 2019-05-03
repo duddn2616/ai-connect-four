@@ -15,7 +15,8 @@ public:
 	ConnectFourBlock();
 	~ConnectFourBlock();
 	ConnectFourBlockColor::Color get_color() const;
-	bool set_color(ConnectFourBlockColor::Color &color);
+	bool set_color(ConnectFourBlockColor::Color color);
+	char get_color_character() const;
 };
 
 #endif
