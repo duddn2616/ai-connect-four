@@ -1,19 +1,27 @@
 #include <iostream>
 #include "connect_four.h"
 
-void StartConnectFour() {
-	cout << " ** Select the order **\n\n";
-	cout << " You First(1), Computer First(2)\n\n";
-	cout << " Select: ";
-	cin >> input;
-
-
+ConnectFour InitializeConnectFour() {
 	ConnectFour cf;
-	cf.Initialize();
 
-	while(!cf.game_over_) {
-		cf.PutStone(cf.GetInput());
+	while (true) {
+		try {
+			if (cf.Initialize()) return cf;
+		}
+		catch (NumberFormatException e) {
+			cf.set_error_message("Error : Number value required!\n");
+		}
+		catch (SelectOutOfRangeException e) {
+			cf.set_error_message("Error : Input out of range! (1-2)\n");
+		}
+		catch (IllegalInputException e) {
+			cf.set_error_message("Error : Unknown input error!\n");
+		}
 	}
+}
+
+void StartConnectFour() {
+	ConnectFour cf = InitializeConnectFour();
 }
 
 int main() {
