@@ -15,3 +15,5 @@ AI와의 대전이 가능한 [Connect Four](https://en.wikipedia.org/wiki/Connec
 + 차상순 (<eniaslovy2@naver.com>)
 + 조건호 (<soo_1992@naver.com>)
 + 김영우 ()
+
+## References
