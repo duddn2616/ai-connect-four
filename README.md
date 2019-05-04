@@ -11,7 +11,7 @@ AI와의 대전이 가능한 [Connect Four](https://en.wikipedia.org/wiki/Connec
 <br>
 
 ## Class Diagram
-![class_diagram](/Project1/Info/c4_class_diagram.jpg)
+![class_diagram](/C4Project/Info/c4_class_diagram.jpg)
 <br>
 
 ## Environment
