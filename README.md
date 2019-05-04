@@ -16,7 +16,7 @@ AI와의 대전이 가능한 [Connect Four](https://en.wikipedia.org/wiki/Connec
 <code>C++</code>
 ### Tools
 
-## Team Member
+## Collaborators
 + 차상순 (<eniaslovy2@naver.com>)
 + 조건호 (<soo_1992@naver.com>)
 + 김영우 ()
