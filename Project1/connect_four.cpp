@@ -77,7 +77,7 @@ bool ConnectFour::Initialize() {
 	case '2':
 		player_turn_ = false;
 		set_player_color(ConnectFourBlockColor::Color::kWhite); return true;
-	default: throw NumberFormatException();
+	default: throw ConnectFourException::NumberFormatException();
 	}
 }
 

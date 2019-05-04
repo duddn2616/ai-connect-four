@@ -24,6 +24,9 @@
     <ClCompile Include="connect_four_block.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="connect_four_exception.h">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="connect_four.h">

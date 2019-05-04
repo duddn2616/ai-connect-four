@@ -121,6 +121,7 @@
   <ItemGroup>
     <ClCompile Include="connect_four.cpp" />
     <ClCompile Include="connect_four_block.cpp" />
+    <ClCompile Include="connect_four_exception.h" />
     <ClCompile Include="Main.cpp">
       <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</SDLCheck>
     </ClCompile>

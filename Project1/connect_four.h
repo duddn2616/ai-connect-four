@@ -6,6 +6,7 @@
 #include <cstring>
 
 #include "connect_four_block.h"
+#include "connect_four_exception.h"
 
 using std::cout;
 using std::cin;
@@ -14,21 +15,12 @@ using std::string;
 static int input;
 static const int kRow = 6, kCol = 7, kInf = 1000;
 
-class IllegalInputException {};
-class NumberFormatException : IllegalInputException {};
-class FullColumnException : IllegalInputException {};
-class OutOfRangeException : IllegalInputException {};
-class ColumnOutOfRangeException : OutOfRangeException {};
-class SelectOutOfRangeException : OutOfRangeException {};
-class GameOverException {};
-
 class ConnectFour {
 public:
 	ConnectFour();
 	~ConnectFour();
 	
 	bool is_player_turn() const;
-	void switch_turn();
 	ConnectFourBlockColor::Color get_player_color() const;
 	void set_player_color(ConnectFourBlockColor::Color color);
 	ConnectFourBlockColor::Color get_opponent_color() const;
@@ -44,6 +36,7 @@ public:
 	bool CheckFour(int row, int col);
 
 private:
+	void switch_turn();
 	void initialize_board();
 	void flush_error_message();
 	void flush_print_buffer();

@@ -8,15 +8,16 @@ namespace ConnectFourBlockColor {
 }
 
 class ConnectFourBlock {
-private:
-	ConnectFourBlockColor::Color color_;
-
 public:
 	ConnectFourBlock();
 	~ConnectFourBlock();
+
 	ConnectFourBlockColor::Color get_color() const;
 	bool set_color(ConnectFourBlockColor::Color color);
 	char get_color_character() const;
+
+private:
+	ConnectFourBlockColor::Color color_;
 };
 
 #endif

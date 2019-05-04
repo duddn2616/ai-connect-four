@@ -8,13 +8,13 @@ ConnectFour* InitializeConnectFour() {
 		try {
 			if (cf->Initialize()) return cf;
 		}
-		catch (NumberFormatException e) {
+		catch (ConnectFourException::NumberFormatException e) {
 			cf->set_error_message("Error : Number value required!\n");
 		}
-		catch (SelectOutOfRangeException e) {
+		catch (ConnectFourException::SelectOutOfRangeException e) {
 			cf->set_error_message("Error : Input out of range! (1-2)\n");
 		}
-		catch (IllegalInputException e) {
+		catch (ConnectFourException::IllegalInputException e) {
 			cf->set_error_message("Error : Unknown input error!\n");
 		}
 	}
