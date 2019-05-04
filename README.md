@@ -1,5 +1,6 @@
 # AI_Connect_Four
-AI와의 대전이 가능한 [Connect Four](https://en.wikipedia.org/wiki/Connect_Four) 게임을 구현한 프로젝트 입니다.<br>
+AI와의 대전이 가능한 [Connect Four](https://en.wikipedia.org/wiki/Connect_Four) 게임을 구현한 프로젝트 입니다.
+<br><br>
 
 ## Environment
 ### Language
