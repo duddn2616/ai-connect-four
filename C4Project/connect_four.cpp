@@ -1,7 +1,8 @@
 #include "connect_four.h"
 
 ConnectFour::ConnectFour()
-	: initialized_(false), error_message_(""), last_put_(-1) {}
+	: input(""), is_board_init_(false), is_order_init_(false),
+	error_message_("\n\n"), print_buffer_(""), last_put_(-1) {}
 
 ConnectFour::~ConnectFour() {
 	for (int r = 0; r < kRow; ++r) {
@@ -13,6 +14,23 @@ ConnectFour::~ConnectFour() {
 
 bool ConnectFour::is_player_turn() const {
 	return player_turn_;
+}
+
+char ConnectFour::get_first_char(string input) {
+	if (input.empty()) return ' ';
+	return input[0];
+}
+
+void ConnectFour::check_input_validity(int from, int to) {
+	char from_ch = from + '0';
+	char to_ch = to + '0';
+	char first_char = get_first_char(input);
+	if (first_char < '0' || first_char > '9') {
+		throw ConnectFourException::NumberFormatException();
+	}
+	else if (first_char < from_ch || first_char > to_ch) {
+		throw ConnectFourException::SelectOutOfRangeException();
+	}
 }
 
 void ConnectFour::switch_turn() {
@@ -33,9 +51,12 @@ ConnectFourBlockColor::Color ConnectFour::get_opponent_color() const {
 }
 
 void ConnectFour::set_error_message(string error_message) {
-	if (error_message.empty()) return;
 	flush_error_message();
-	error_message_ = error_message;
+	error_message_ = error_message + "\n\n";
+}
+
+void ConnectFour::append_print_buffer(char appended_char) {
+	print_buffer_ += appended_char;
 }
 
 void ConnectFour::append_print_buffer(string appended_string) {
@@ -58,105 +79,133 @@ void ConnectFour::set_last_put(int col) {
 	last_put_ = col;
 }
 
-bool ConnectFour::Initialize() {
-	if (!initialized_) initialize_board();
+void ConnectFour::Initialize() {
+	if (!is_board_init_) init_board();
+	if (!is_order_init_) init_order();
+	init_method();
+}
 
-	string input = "";
+void ConnectFour::init_board() {
+	for (int r = 0; r < kRow; ++r) {
+		for (int c = 0; c < kCol; ++c) {
+			block[r][c] = new ConnectFourBlock();
+		}
+	}
+
+	is_board_init_ = true;
+}
+
+void ConnectFour::init_order() {
 	char first_char = 0;
 	PrintBoard();
 	cout << " ** Select the order **\n\n";
 	cout << " You First(1), Computer First(2)\n\n";
 	cout << " Select: ";
 	cin >> input;
-	first_char = input[0];
-	
-	switch (first_char) {
+	check_input_validity(1, 2);
+
+	switch (get_first_char(input)) {
 	case '1':
 		player_turn_ = true;
-		set_player_color(ConnectFourBlockColor::Color::kBlack); return true;
+		set_player_color(ConnectFourBlockColor::Color::kBlack);
+		break;
 	case '2':
 		player_turn_ = false;
-		set_player_color(ConnectFourBlockColor::Color::kWhite); return true;
-	default: throw ConnectFourException::NumberFormatException();
+		set_player_color(ConnectFourBlockColor::Color::kWhite);
+		break;
+	}
+
+	is_order_init_ = true;
+}
+
+void ConnectFour::init_method() {
+	char first_char = 0;
+	PrintBoard();
+	cout << " ** Select AI Decision Rule **\n\n";
+	cout << " Minimax + Alpha-beta Pruning (1),\n";
+	cout << " Monte Carlo Tree Search (2)\n\n";
+	cout << " Select: ";
+	cin >> input;
+	check_input_validity(1, 2);
+
+	switch (get_first_char(input)) {
+	case '1':
+		minimax_ = true;
+		// Minimax *minimax = new Minimax();
+		break;
+	case '2':
+		minimax_ = false;
+		// MCTS *mtcs = new MCTS();
+		break;
 	}
 }
 
-void ConnectFour::initialize_board() {
-	for (int r = 0; r < kRow; ++r) {
-		for (int c = 0; c < kCol; ++c) {
-			block[r][c] = new ConnectFourBlock();
-		}
-	}
-	initialized_ = true;
-}
-
-void ConnectFour::PrintBoard() {/*
+void ConnectFour::PrintBoard() {
 	system("cls");
 
 	flush_print_buffer();
 	append_print_buffer(error_message_);
+	set_error_message("");
 
-	buffer += "¦£ ";
+	append_print_buffer(' ');
 	for (int c = 1; c <= kRow+1; ++c) {
-		buffer += '0' + c;
-		buffer += ' ';
+		append_print_buffer(c + '0');
+		append_print_buffer(' ');
 	}
-	buffer += "\b¦¤\n";
+	append_print_buffer(" \n");
 	for (int r = 0; r < kRow; ++r) {
-		buffer += "¦¢ ";
+		append_print_buffer(' ');
 		for (int c = 0; c < kCol; ++c) {
-			buffer += block[r][c];
-			buffer += ' ';
+			append_print_buffer(block[r][c]->get_color_char());
+			append_print_buffer(' ');
 		}
-		buffer += "\b¦¢\n";
+		append_print_buffer(" \n");
 	}
-	buffer += "¦¦";
-	for (int c = 1; c <= kRow + 1; ++c) {
-		buffer += "¦¡¦¡";
-	}
-	buffer += "¦¥\n";
+	append_print_buffer(" \n");
 
-	cout << buffer;
-	buffer.clear();*/
+	cout << print_buffer_;
 }
 
 int ConnectFour::GetInput() {
 	PrintBoard();
-	if (player_turn_) {
-		int c;
+	if (is_player_turn()) {
 		cout << " Your turn!\n\n";
 		cout << " Select: ";
-		cin >> c;
-		return c;
+		cin >> input;
+		check_input_validity(1, kCol);
+		return get_first_char(input) - '0';
 	}
 	else {
-		int n;
 		cout << " Computer's turn!\n\n";
-		cout << " ** Choose Method **\n\n";
-		cout << " MinMax(1), MCTS(2)\n\n";
-		cout << " Select: ";
-		cin >> n;
-		if (n == 1) {
-			return 1; // return Min_Max();
-		}
-		else if (n == 2) {
-			return 2; // return MCTS();
-		}
-		else return kInf;
+		cout << " Computer is thinking..\n\n";
+		if (minimax_) return 1; // Minimax
+		else return 2; // MCTS
 	}
+	return -1;
 }
 
-void ConnectFour::PutStone(int c) {/*
-	if (block[0][c-1] != '.' || c < 1 || c > 7) {
-		return;
+void ConnectFour::PutStone(int col) {
+	if (col < 1 || col > kCol) {
+		throw ConnectFourException::ColumnOutOfRangeException();
 	}
-	for (int r = kRow-1; r >= 0; --r) {
-		if (block[r][c-1] == '.') {
-			block[r][c-1] = player_turn_ ? 'O' : 'X';
+	else if (!block[0][col-1]->is_empty()) {
+		throw ConnectFourException::FullColumnException();
+	}
+	for (int row = kRow-1; row >= 0; --row) {
+		if (block[row][col-1]->is_empty()) {
+			block[row][col-1]->set_color(
+				is_player_turn()
+				&& get_player_color() == ConnectFourBlockColor::Color::kBlack
+				||
+				!is_player_turn()
+				&& get_opponent_color() == ConnectFourBlockColor::Color::kBlack
+				?
+				ConnectFourBlockColor::Color::kBlack
+				: ConnectFourBlockColor::Color::kWhite);
 			player_turn_ = !player_turn_;
 			return;
 		}
-	}*/
+	}
 }
 
 bool ConnectFour::CheckFour(int r, int c) {

@@ -10,5 +10,6 @@ public:
 	class ColumnOutOfRangeException : OutOfRangeException {};
 	class SelectOutOfRangeException : OutOfRangeException {};
 	class GameOverException {};
+	class FatalErrorException {};
 };
 #endif
