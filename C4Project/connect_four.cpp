@@ -21,7 +21,7 @@ char ConnectFour::get_first_char(string input) {
 	return input[0];
 }
 
-void ConnectFour::check_input_validity(int from, int to) {
+void ConnectFour::check_input_validity(int from, int to, bool column) {
 	char from_ch = from + '0';
 	char to_ch = to + '0';
 	char first_char = get_first_char(input);
@@ -29,7 +29,10 @@ void ConnectFour::check_input_validity(int from, int to) {
 		throw ConnectFourException::NumberFormatException();
 	}
 	else if (first_char < from_ch || first_char > to_ch) {
-		throw ConnectFourException::SelectOutOfRangeException();
+		if (column)
+			throw ConnectFourException::ColumnOutOfRangeException();
+		else 
+			throw ConnectFourException::SelectOutOfRangeException();
 	}
 }
 
@@ -102,7 +105,7 @@ void ConnectFour::init_order() {
 	cout << " You First(1), Computer First(2)\n\n";
 	cout << " Select: ";
 	cin >> input;
-	check_input_validity(1, 2);
+	check_input_validity(1, 2, false);
 
 	switch (get_first_char(input)) {
 	case '1':
@@ -126,7 +129,7 @@ void ConnectFour::init_method() {
 	cout << " Monte Carlo Tree Search (2)\n\n";
 	cout << " Select: ";
 	cin >> input;
-	check_input_validity(1, 2);
+	check_input_validity(1, 2, false);
 
 	switch (get_first_char(input)) {
 	case '1':
@@ -172,7 +175,7 @@ int ConnectFour::GetInput() {
 		cout << " Your turn!\n\n";
 		cout << " Select: ";
 		cin >> input;
-		check_input_validity(1, kCol);
+		check_input_validity(1, kCol, true);
 		return get_first_char(input) - '0';
 	}
 	else {
@@ -185,10 +188,7 @@ int ConnectFour::GetInput() {
 }
 
 void ConnectFour::PutStone(int col) {
-	if (col < 1 || col > kCol) {
-		throw ConnectFourException::ColumnOutOfRangeException();
-	}
-	else if (!block[0][col-1]->is_empty()) {
+	if (!block[0][col-1]->is_empty()) {
 		throw ConnectFourException::FullColumnException();
 	}
 	for (int row = kRow-1; row >= 0; --row) {

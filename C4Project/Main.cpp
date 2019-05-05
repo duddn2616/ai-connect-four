@@ -27,8 +27,8 @@ int GetInput() {
 		try {
 			return cf->GetInput();
 		}
-		catch (ConnectFourException::SelectOutOfRangeException e) {
-			cf->set_error_message("** Error : Input out of range! (1-2) **");
+		catch (ConnectFourException::ColumnOutOfRangeException e) {
+			cf->set_error_message("** Error : Input out of range! (1-7) **");
 		}
 		catch (ConnectFourException::NumberFormatException e) {
 			cf->set_error_message("** Error : Number value required! **");
@@ -43,10 +43,6 @@ void PutStone(int input) {
 	while (true) {
 		try {
 			cf->PutStone(input);
-			return;
-		}
-		catch (ConnectFourException::ColumnOutOfRangeException e) {
-			cf->set_error_message("** Error : Input out of range! (1-7) **");
 			return;
 		}
 		catch (ConnectFourException::FullColumnException e) {
@@ -72,7 +68,7 @@ void StartConnectFour() {
 		}
 		catch (ConnectFourException::FatalErrorException e) {
 			cout << " Fatal Error!\n";
-			cout << " Computer is accessing full column...\n";
+			cout << " Computer has accessed full column...\n";
 			break;
 		}
 		catch (...) {

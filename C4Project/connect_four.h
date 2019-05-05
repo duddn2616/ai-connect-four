@@ -38,7 +38,7 @@ public:
 
 private:
 	char get_first_char(string input);
-	void check_input_validity(int from, int to);
+	void check_input_validity(int from, int to, bool column);
 	void switch_turn();
 	void init_board();
 	void init_order();
