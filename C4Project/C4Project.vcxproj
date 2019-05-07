@@ -121,7 +121,10 @@
   <ItemGroup>
     <ClCompile Include="connect_four.cpp" />
     <ClCompile Include="connect_four_block.cpp" />
+    <ClCompile Include="connect_four_tree.cpp" />
+    <ClCompile Include="connect_four_tree_node.cpp" />
     <ClCompile Include="connect_four_exception.h" />
+    <ClCompile Include="connect_four_minimax.cpp" />
     <ClCompile Include="Main.cpp">
       <SDLCheck Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</SDLCheck>
     </ClCompile>
@@ -129,6 +132,9 @@
   <ItemGroup>
     <ClInclude Include="connect_four.h" />
     <ClInclude Include="connect_four_block.h" />
+    <ClInclude Include="connect_four_tree.h" />
+    <ClInclude Include="connect_four_tree_node.h" />
+    <ClInclude Include="connect_four_minimax.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

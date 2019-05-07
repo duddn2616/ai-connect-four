@@ -133,11 +133,11 @@ void ConnectFour::init_method() {
 
 	switch (get_first_char(input)) {
 	case '1':
-		minimax_ = true;
-		// Minimax *minimax = new Minimax();
+		is_minimax_ = true;
+		minimax = new Minimax();
 		break;
 	case '2':
-		minimax_ = false;
+		is_minimax_ = false;
 		// MCTS *mtcs = new MCTS();
 		break;
 	}
@@ -176,12 +176,13 @@ int ConnectFour::GetInput() {
 		cout << " Select: ";
 		cin >> input;
 		check_input_validity(1, kCol, true);
-		return get_first_char(input) - '0';
+		return last_put_ = get_first_char(input) - '0';
 	}
 	else {
 		cout << " Computer's turn!\n\n";
 		cout << " Computer is thinking..\n\n";
-		if (minimax_) return 1; // Minimax
+		if (is_minimax_)
+			return minimax->GetInput(last_put_); // Minimax
 		else return 2; // MCTS
 	}
 	return -1;

@@ -1,4 +1,5 @@
 #include <iostream>
+
 #include "connect_four.h"
 
 ConnectFour *cf;

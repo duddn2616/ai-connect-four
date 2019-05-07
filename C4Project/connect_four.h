@@ -7,6 +7,7 @@
 
 #include "connect_four_block.h"
 #include "connect_four_exception.h"
+#include "connect_four_minimax.h"
 
 using std::cout;
 using std::cin;
@@ -14,6 +15,8 @@ using std::string;
 
 
 static const int kRow = 6, kCol = 7, kInf = 1000;
+
+class ConnectFourRule {};
 
 class ConnectFour {
 public:
@@ -50,12 +53,13 @@ private:
 	bool is_board_init_;
 	bool is_order_init_;
 	bool player_turn_;
-	bool minimax_;
+	bool is_minimax_;
 	ConnectFourBlockColor::Color player_color_;
 	string error_message_;
 	string print_buffer_;
 	ConnectFourBlock *block[kRow][kCol];
 	int last_put_;
+	Minimax *minimax;
 };
 
 #endif

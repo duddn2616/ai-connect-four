@@ -1,5 +1,4 @@
-﻿  connect_four.cpp
-  Main.cpp
+﻿  Main.cpp
 c:\users\soon\documents\github\ai-connect-four\c4project\main.cpp(13): warning C4101: 'e': unreferenced local variable
 c:\users\soon\documents\github\ai-connect-four\c4project\main.cpp(16): warning C4101: 'e': unreferenced local variable
 c:\users\soon\documents\github\ai-connect-four\c4project\main.cpp(19): warning C4101: 'e': unreferenced local variable
